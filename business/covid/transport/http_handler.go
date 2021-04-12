@@ -12,11 +12,15 @@ type CovidHTTPHandler struct {
 }
 
 func NewCovidHTTPHandler(router *gin.Engine, covidService covid.Service) {
-	// handler := CovidHTTPHandler{covidService}
+	h := CovidHTTPHandler{covidService}
 
-	router.GET("/ping", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
-	})
+	router.GET("/covid/summary", h.GetCovidSummary)
+}
+
+func (h *CovidHTTPHandler) GetCovidSummary(c *gin.Context) {
+	res, err := h.covidService.CovidSummary()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err.Error())
+	}
+	c.JSON(http.StatusOK, res)
 }
