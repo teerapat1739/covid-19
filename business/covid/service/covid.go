@@ -3,8 +3,12 @@ package service
 import (
 	"covid-19/business/covid"
 	"covid-19/business/covid/model"
+	"encoding/json"
+	"io/ioutil"
+	"os"
 
 	"github.com/mitchellh/mapstructure"
+	"github.com/stretchr/testify/mock"
 )
 
 type covidService struct {
@@ -15,7 +19,7 @@ func NewCovidService(covidRepo covid.Repository) covid.Service {
 	return &covidService{covidRepo: covidRepo}
 }
 
-func (c *covidService) CovidSummary() (interface{}, error) {
+func (c *covidService) CovidSummary() ([]model.ResponseApi, error) {
 	res, err := c.covidRepo.GetCovidOpenCases()
 	if err != nil {
 		return nil, err
@@ -70,6 +74,18 @@ func (c *covidService) CovidSummary() (interface{}, error) {
 		mapstructure.Decode(element, &d)
 		data = append(data, d)
 	}
-
 	return data, err
+}
+
+type CovidRepomock struct {
+	mock.Mock
+}
+
+func (m *CovidRepomock) GetCovidOpenCases() (model.ReponseApiOpenCases, error) {
+	jsonFile, _ := os.Open("covid.json")
+	var c model.ReponseApiOpenCases
+
+	byteValue, _ := ioutil.ReadAll(jsonFile)
+	json.Unmarshal(byteValue, &c)
+	return c, nil
 }

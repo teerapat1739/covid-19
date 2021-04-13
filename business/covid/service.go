@@ -1,5 +1,7 @@
 package covid
 
+import "covid-19/business/covid/model"
+
 type Service interface {
-	CovidSummary() (interface{}, error)
+	CovidSummary() ([]model.ResponseApi, error)
 }

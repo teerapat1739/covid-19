@@ -22,13 +22,15 @@ type CovidDetail struct {
 }
 
 type ResponseApi struct {
-	Proince    string `json:"Proince"`
-	Provinceid int    `json:"ProvinceId"`
-	Totaluser  int    `json:"totalUser"`
-	Groupage   struct {
-		Agelessthan30     int `json:"AgeLessThan30"`
-		Agebetween31And60 int `json:"AgeBetween31And60"`
-		Agemorethan60     int `json:"AgeMoreThan60"`
-		Agedontknow       int `json:"AgeDontKnow"`
-	} `json:"GroupAge"`
+	Proince    string   `json:"Proince"`
+	Provinceid int      `json:"ProvinceId"`
+	Totaluser  int      `json:"totalUser"`
+	Groupage   Groupage `json:"GroupAge"`
+}
+
+type Groupage struct {
+	Agelessthan30     int `json:"AgeLessThan30"`
+	Agebetween31And60 int `json:"AgeBetween31And60"`
+	Agemorethan60     int `json:"AgeMoreThan60"`
+	Agedontknow       int `json:"AgeDontKnow"`
 }
