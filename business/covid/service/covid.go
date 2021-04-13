@@ -23,7 +23,6 @@ func (c *covidService) CovidSummary() (model.Summary, error) {
 	if err != nil {
 		return model.Summary{}, err
 	}
-	// m := make(map[int]model.ResponseApi)
 	provinceSum := make(map[string]float64)
 	ageSum := make(map[string]float64)
 
