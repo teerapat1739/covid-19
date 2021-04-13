@@ -25,20 +25,11 @@ func TestCovidSummary(t *testing.T) {
 
 	actual, err := covidSrc.CovidSummary()
 
-	expected := []model.ResponseApi{}
-
-	expected = append(expected, model.ResponseApi{
-		Proince:    "สมุทรสาคร",
-		Provinceid: 62,
-		Totaluser:  43,
-		Groupage: model.Groupage{
-			Agelessthan30:     1,
-			Agebetween31And60: 12,
-			Agemorethan60:     5,
-			Agedontknow:       25,
-		},
-	})
+	var expected model.Summary
+	expected.Province = map[string]float64{"สมุทรสาคร": float64(42)}
+	expected.AgeGroup = map[string]float64{"0-30": float64(0), "31-60": float64(11), "61+": float64(4), "N/A": float64(24)}
 
 	assert.Equal(t, nil, err)
-	assert.Equal(t, expected, actual)
+	assert.Equal(t, expected.Province, actual.Province)
+	assert.Equal(t, expected.AgeGroup, actual.AgeGroup)
 }

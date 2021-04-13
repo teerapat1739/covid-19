@@ -7,7 +7,6 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/mitchellh/mapstructure"
 	"github.com/stretchr/testify/mock"
 )
 
@@ -19,62 +18,47 @@ func NewCovidService(covidRepo covid.Repository) covid.Service {
 	return &covidService{covidRepo: covidRepo}
 }
 
-func (c *covidService) CovidSummary() ([]model.ResponseApi, error) {
+func (c *covidService) CovidSummary() (model.Summary, error) {
 	res, err := c.covidRepo.GetCovidOpenCases()
 	if err != nil {
-		return nil, err
+		return model.Summary{}, err
 	}
-	m := make(map[int]model.ResponseApi)
+	// m := make(map[int]model.ResponseApi)
+	provinceSum := make(map[string]float64)
+	ageSum := make(map[string]float64)
 
 	for _, val := range res.Data {
-		if v, ok := m[val.Provinceid]; ok {
-			resApi := v
-			resApi.Totaluser += 1
-			if val.Age == nil {
-				resApi.Groupage.Agedontknow += 1
-			} else {
-				age := val.Age.(float64)
-				if age <= 30 {
-					resApi.Groupage.Agelessthan30 += 1
-				} else if age > 31 && age <= 60 {
-					resApi.Groupage.Agebetween31And60 += 1
-				} else {
-					resApi.Groupage.Agemorethan60 += 1
-				}
-			}
-			m[val.Provinceid] = resApi
-
+		if _, ok := provinceSum[val.Province]; ok {
+			provinceSum[val.Province] += 1
 		} else {
-			var resApi model.ResponseApi
-			resApi.Proince = val.Province
-			resApi.Provinceid = val.Provinceid
-			resApi.Totaluser = 1
-			if val.Age == nil {
-				resApi.Groupage.Agedontknow += 1
-			} else {
-				age := val.Age.(float64)
-				if age <= 30 {
-					resApi.Groupage.Agelessthan30 += 1
-				} else if age > 31 && age <= 60 {
-					resApi.Groupage.Agebetween31And60 += 1
-				} else {
-					resApi.Groupage.Agemorethan60 += 1
-				}
-			}
-
-			m[val.Provinceid] = resApi
+			provinceSum[val.Province] = 0
 		}
 
+		ageFiledName := ""
+		if val.Age == nil {
+			ageFiledName = "N/A"
+		} else {
+			age := val.Age.(float64)
+			if age <= 30 {
+				ageFiledName = "0-30"
+			} else if age >= 31 && age <= 60 {
+				ageFiledName = "31-60"
+			} else {
+				ageFiledName = "61+"
+			}
+		}
+
+		if _, ok := ageSum[ageFiledName]; ok {
+			ageSum[ageFiledName] += 1
+		} else {
+			ageSum[ageFiledName] = 0
+		}
 	}
 
-	var data []model.ResponseApi
-	for _, element := range m {
-		var d model.ResponseApi
-
-		mapstructure.Decode(element, &d)
-		data = append(data, d)
-	}
-	return data, err
+	var m model.Summary
+	m.Province = provinceSum
+	m.AgeGroup = ageSum
+	return m, err
 }
 
 type CovidRepomock struct {

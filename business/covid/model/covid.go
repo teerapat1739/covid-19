@@ -29,8 +29,13 @@ type ResponseApi struct {
 }
 
 type Groupage struct {
-	Agelessthan30     int `json:"AgeLessThan30"`
-	Agebetween31And60 int `json:"AgeBetween31And60"`
-	Agemorethan60     int `json:"AgeMoreThan60"`
-	Agedontknow       int `json:"AgeDontKnow"`
+	Agelessthan30     int `json:"0-30"`
+	Agebetween31And60 int `json:"31-60"`
+	Agemorethan60     int `json:"61+"`
+	Agedontknow       int `json:"N/A"`
+}
+
+type Summary struct {
+	Province map[string]float64 `json:"Province"`
+	AgeGroup map[string]float64 `json:"AgeGroup"`
 }
