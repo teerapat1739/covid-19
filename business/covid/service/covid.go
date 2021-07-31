@@ -19,7 +19,7 @@ func NewCovidService(covidRepo covid.Repository) covid.Service {
 }
 
 func (c *covidService) CovidSummary() (model.Summary, error) {
-	res, err := c.covidRepo.GetCovidOpenCases()
+	res, err := c.covidRepo.GetCovidCases()
 	if err != nil {
 		return model.Summary{}, err
 	}
@@ -64,7 +64,7 @@ type CovidRepomock struct {
 	mock.Mock
 }
 
-func (m *CovidRepomock) GetCovidOpenCases() (model.ReponseApiOpenCases, error) {
+func (m *CovidRepomock) GetCovidCases() (model.ReponseApiOpenCases, error) {
 	jsonFile, _ := os.Open("covid.json")
 	var c model.ReponseApiOpenCases
 

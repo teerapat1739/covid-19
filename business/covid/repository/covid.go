@@ -19,9 +19,9 @@ func NewCovidRepository(client *http.Client, baseCovidUrl string) covid.Reposito
 
 }
 
-func (c *covidRepository) GetCovidOpenCases() (model.ReponseApiOpenCases, error) {
+func (c *covidRepository) GetCovidCases() (model.ReponseApiOpenCases, error) {
 	var m model.ReponseApiOpenCases
-	resp, err := c.client.Get(c.baseCovidUrl + "/open/cases")
+	resp, err := c.client.Get(c.baseCovidUrl + "devinterview/covid-cases.json")
 	if err != nil {
 		return m, err
 	}

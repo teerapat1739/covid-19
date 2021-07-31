@@ -34,17 +34,17 @@ func (m *MockRepository) EXPECT() *MockRepositoryMockRecorder {
 	return m.recorder
 }
 
-// GetCovidOpenCases mocks base method.
-func (m *MockRepository) GetCovidOpenCases() (model.ReponseApiOpenCases, error) {
+// GetCovidCases mocks base method.
+func (m *MockRepository) GetCovidCases() (model.ReponseApiOpenCases, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetCovidOpenCases")
+	ret := m.ctrl.Call(m, "GetCovidCases")
 	ret0, _ := ret[0].(model.ReponseApiOpenCases)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetCovidOpenCases indicates an expected call of GetCovidOpenCases.
-func (mr *MockRepositoryMockRecorder) GetCovidOpenCases() *gomock.Call {
+// GetCovidCases indicates an expected call of GetCovidCases.
+func (mr *MockRepositoryMockRecorder) GetCovidCases() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCovidOpenCases", reflect.TypeOf((*MockRepository)(nil).GetCovidOpenCases))
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCovidCases", reflect.TypeOf((*MockRepository)(nil).GetCovidCases))
 }
