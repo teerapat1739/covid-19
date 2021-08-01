@@ -1,23 +1,23 @@
 package model
 
-// ReponseApiSummary represent reponse api form open/cases
-type ReponseApiOpenCases struct {
-	Data []CovidDetail
+// ReponseApiSummary represent reponse api form wongnai
+
+type ReponseCovidApiCases struct {
+	Data []CovidDetail `json:"Data"`
 }
 
 type CovidDetail struct {
 	Confirmdate    string      `json:"ConfirmDate"`
-	No             string      `json:"No"`
-	Age            interface{} `json:"Age"`
+	No             interface{} `json:"No"`
+	Age            *int        `json:"Age"`
 	Gender         string      `json:"Gender"`
 	Genderen       string      `json:"GenderEn"`
-	Nation         string      `json:"Nation"`
+	Nation         interface{} `json:"Nation"`
 	Nationen       string      `json:"NationEn"`
 	Province       string      `json:"Province"`
 	Provinceid     int         `json:"ProvinceId"`
-	District       string      `json:"District"`
+	District       interface{} `json:"District"`
 	Provinceen     string      `json:"ProvinceEn"`
-	Detail         interface{} `json:"Detail"`
 	Statquarantine int         `json:"StatQuarantine"`
 }
 

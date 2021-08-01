@@ -35,10 +35,10 @@ func (m *MockRepository) EXPECT() *MockRepositoryMockRecorder {
 }
 
 // GetCovidCases mocks base method.
-func (m *MockRepository) GetCovidCases() (model.ReponseApiOpenCases, error) {
+func (m *MockRepository) GetCovidCases() (model.ReponseCovidApiCases, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetCovidCases")
-	ret0, _ := ret[0].(model.ReponseApiOpenCases)
+	ret0, _ := ret[0].(model.ReponseCovidApiCases)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }

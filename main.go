@@ -1,7 +1,7 @@
 package main
 
 import (
-	"covid-19/pkg"
+	cmd "covid-19/command"
 
 	"github.com/subosito/gotenv"
 )
@@ -11,7 +11,5 @@ func init() {
 }
 
 func main() {
-
-	router := pkg.InintService()
-	router.Run()
+	cmd.InintCommand()
 }
